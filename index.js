@@ -72,7 +72,7 @@ const keys = {
 	},
 };
 
-// Call the Player
+// Call the player
 
 function animate() {
 	requestAnimationFrame(animate);
