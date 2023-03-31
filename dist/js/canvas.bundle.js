@@ -1322,6 +1322,7 @@ var Particle = /*#__PURE__*/function () {
 
 var platformImage;
 var platformSmallTallImage;
+var blockImage;
 var blockTriImage;
 var lgPlatformImage;
 var tPlatformImage;
@@ -1365,24 +1366,29 @@ function _init() {
           case 5:
             platformSmallTallImage = _context.sent;
             _context.next = 8;
-            return Object(_utils_js__WEBPACK_IMPORTED_MODULE_4__["createImageAsync"])(_img_blockTri_png__WEBPACK_IMPORTED_MODULE_10__["default"]);
+            return Object(_utils_js__WEBPACK_IMPORTED_MODULE_4__["createImageAsync"])(_img_block_png__WEBPACK_IMPORTED_MODULE_9__["default"]);
 
           case 8:
-            blockTriImage = _context.sent;
+            blockImage = _context.sent;
             _context.next = 11;
-            return Object(_utils_js__WEBPACK_IMPORTED_MODULE_4__["createImageAsync"])(_img_lgPlatform_png__WEBPACK_IMPORTED_MODULE_12__["default"]);
+            return Object(_utils_js__WEBPACK_IMPORTED_MODULE_4__["createImageAsync"])(_img_blockTri_png__WEBPACK_IMPORTED_MODULE_10__["default"]);
 
           case 11:
-            lgPlatformImage = _context.sent;
+            blockTriImage = _context.sent;
             _context.next = 14;
-            return Object(_utils_js__WEBPACK_IMPORTED_MODULE_4__["createImageAsync"])(_img_tPlatform_png__WEBPACK_IMPORTED_MODULE_13__["default"]);
+            return Object(_utils_js__WEBPACK_IMPORTED_MODULE_4__["createImageAsync"])(_img_lgPlatform_png__WEBPACK_IMPORTED_MODULE_12__["default"]);
 
           case 14:
-            tPlatformImage = _context.sent;
+            lgPlatformImage = _context.sent;
             _context.next = 17;
             return Object(_utils_js__WEBPACK_IMPORTED_MODULE_4__["createImageAsync"])(_img_tPlatform_png__WEBPACK_IMPORTED_MODULE_13__["default"]);
 
           case 17:
+            tPlatformImage = _context.sent;
+            _context.next = 20;
+            return Object(_utils_js__WEBPACK_IMPORTED_MODULE_4__["createImageAsync"])(_img_tPlatform_png__WEBPACK_IMPORTED_MODULE_13__["default"]);
+
+          case 20:
             xtPlatformImage = _context.sent;
             fireFlowers = [new FireFlower({
               position: {
@@ -1474,10 +1480,86 @@ function _init() {
                 limit: 100,
                 traveled: 0
               }
-            })]; // particles = [new Particle({})];
+            }), new Enemy({
+              position: {
+                x: 6965,
+                y: 10
+              },
+              velocity: {
+                x: -0.5,
+                y: 0
+              },
+              distance: {
+                limit: 100,
+                traveled: 0
+              }
+            })];
+            particles = []; // particles = [new Particle({})];
             // create the platforms
 
-            platforms = [];
+            platforms = [new Platform({
+              x: 908 + 100,
+              y: 300,
+              image: blockTriImage,
+              block: true
+            }), new Platform({
+              x: 908 + 100 + blockImage.width,
+              y: 100,
+              image: blockImage,
+              block: true
+            }), new Platform({
+              x: 1991 + lgPlatformImage.width - tPlatformImage.width,
+              y: canvas.height - lgPlatformImage.height - tPlatformImage.height,
+              image: tPlatformImage,
+              block: false
+            }), new Platform({
+              x: 1991 + lgPlatformImage.width - tPlatformImage.width - 100,
+              y: canvas.height - lgPlatformImage.height - tPlatformImage.height + blockImage.height,
+              image: blockImage,
+              block: true
+            }), new Platform({
+              x: 5710 + xtPlatformImage.width + 175,
+              y: canvas.height - xtPlatformImage.height,
+              image: blockImage,
+              block: true,
+              text: 5710 + xtPlatformImage.width + 175
+            }), new Platform({
+              x: 6113 + 175,
+              y: canvas.height - xtPlatformImage.height,
+              image: blockImage,
+              block: true,
+              text: 6113 + 175
+            }), new Platform({
+              x: 6113 + 175 * 2,
+              y: canvas.height - xtPlatformImage.height,
+              image: blockImage,
+              block: true,
+              text: 6113 + 175 * 2
+            }), new Platform({
+              x: 6113 + 175 * 3,
+              y: canvas.height - xtPlatformImage.height - 100,
+              image: blockImage,
+              block: true,
+              text: 6113 + 175 * 3
+            }), new Platform({
+              x: 6113 + 175 * 4,
+              y: canvas.height - xtPlatformImage.height - 200,
+              image: blockTriImage,
+              block: true,
+              text: 6113 + 175 * 4
+            }), new Platform({
+              x: 6113 + 175 * 4 + blockTriImage.width,
+              y: canvas.height - xtPlatformImage.height - 200,
+              image: blockTriImage,
+              block: true,
+              text: 6113 + 175 * 4 + blockTriImage.width
+            }), new Platform({
+              x: 6968 + 300,
+              y: canvas.height - lgPlatformImage.height,
+              image: lgPlatformImage,
+              block: true,
+              text: 6968 + 300
+            })];
             genericObjects = [new GenericObject({
               x: -1,
               y: -1,
@@ -1534,7 +1616,7 @@ function _init() {
               }
             });
 
-          case 28:
+          case 32:
           case "end":
             return _context.stop();
         }
@@ -1768,7 +1850,7 @@ function animate() {
     });
   }); // win condition
 
-  if (platformImage && scrollOffset > platformImage.width * 5 + 300 - 2) {
+  if (platformImage && scrollOffset + 400 + player.width > 6968 + 300) {
     console.log("you win");
   } // lose condition
 

@@ -391,6 +391,7 @@ class Particle {
 
 let platformImage;
 let platformSmallTallImage;
+let blockImage;
 let blockTriImage;
 
 let lgPlatformImage;
@@ -420,6 +421,8 @@ let scrollOffset = 0;
 async function init() {
 	platformImage = await createImageAsync(platform);
 	platformSmallTallImage = await createImageAsync(platformSmallTall);
+
+	blockImage = await createImageAsync(block);
 	blockTriImage = await createImageAsync(blockTri);
 
 	lgPlatformImage = await createImageAsync(lgPlatform);
@@ -533,12 +536,112 @@ async function init() {
 				traveled: 0,
 			},
 		}),
+
+		new Enemy({
+			position: {
+				x: 6965,
+				y: 10,
+			},
+			velocity: {
+				x: -0.5,
+				y: 0,
+			},
+			distance: {
+				limit: 100,
+				traveled: 0,
+			},
+		}),
 	];
 
+	particles = [];
 	// particles = [new Particle({})];
 
 	// create the platforms
-	platforms = [];
+	platforms = [
+		new Platform({
+			x: 908 + 100,
+			y: 300,
+			image: blockTriImage,
+			block: true,
+		}),
+
+		new Platform({
+			x: 908 + 100 + blockImage.width,
+			y: 100,
+			image: blockImage,
+			block: true,
+		}),
+
+		new Platform({
+			x: 1991 + lgPlatformImage.width - tPlatformImage.width,
+			y: canvas.height - lgPlatformImage.height - tPlatformImage.height,
+			image: tPlatformImage,
+			block: false,
+		}),
+
+		new Platform({
+			x: 1991 + lgPlatformImage.width - tPlatformImage.width - 100,
+			y: canvas.height - lgPlatformImage.height - tPlatformImage.height + blockImage.height,
+			image: blockImage,
+			block: true,
+		}),
+
+		new Platform({
+			x: 5710 + xtPlatformImage.width + 175,
+			y: canvas.height - xtPlatformImage.height,
+			image: blockImage,
+			block: true,
+			text: 5710 + xtPlatformImage.width + 175,
+		}),
+
+		new Platform({
+			x: 6113 + 175,
+			y: canvas.height - xtPlatformImage.height,
+			image: blockImage,
+			block: true,
+			text: 6113 + 175,
+		}),
+
+		new Platform({
+			x: 6113 + 175 * 2,
+			y: canvas.height - xtPlatformImage.height,
+			image: blockImage,
+			block: true,
+			text: 6113 + 175 * 2,
+		}),
+
+		new Platform({
+			x: 6113 + 175 * 3,
+			y: canvas.height - xtPlatformImage.height - 100,
+			image: blockImage,
+			block: true,
+			text: 6113 + 175 * 3,
+		}),
+
+		new Platform({
+			x: 6113 + 175 * 4,
+			y: canvas.height - xtPlatformImage.height - 200,
+			image: blockTriImage,
+			block: true,
+			text: 6113 + 175 * 4,
+		}),
+
+		new Platform({
+			x: 6113 + 175 * 4 + blockTriImage.width,
+			y: canvas.height - xtPlatformImage.height - 200,
+			image: blockTriImage,
+			block: true,
+			text: 6113 + 175 * 4 + blockTriImage.width,
+		}),
+
+		new Platform({
+			x: 6968 + 300,
+			y: canvas.height - lgPlatformImage.height,
+			image: lgPlatformImage,
+			block: true,
+			text: 6968 + 300,
+		}),
+	];
 
 	genericObjects = [
 		new GenericObject({
@@ -905,7 +1008,7 @@ function animate() {
 	});
 
 	// win condition
-	if (platformImage && scrollOffset > platformImage.width * 5 + 300 - 2) {
+	if (platformImage && scrollOffset + 400 + player.width > 6968 + 300) {
 		console.log("you win");
 	}
 
